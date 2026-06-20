@@ -1,0 +1,492 @@
+{
+  "item": [
+    {
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Send",
+      "description": {
+        "content": "Send transactional email.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1b2c3d4-0001-4000-8000-000000000010",
+          "name": "Send a transactional email",
+          "request": {
+            "name": "Send a transactional email",
+            "description": {
+              "content": "Sends a single transactional email. One of htmlbody or textbody is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "MailPace-Server-Token",
+                "value": "{{serverToken}}"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"subject\": \"Welcome to Acme\",\n  \"textbody\": \"Thanks for signing up.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-0002-4000-8000-000000000001",
+      "name": "Domains",
+      "description": {
+        "content": "Manage sending domains and DKIM verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1b2c3d4-0002-4000-8000-000000000010",
+          "name": "List domains",
+          "request": {
+            "name": "List domains",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "GET"
+          }
+        },
+        {
+          "id": "a1b2c3d4-0002-4000-8000-000000000011",
+          "name": "Create a domain",
+          "request": {
+            "name": "Create a domain",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": {\n    \"url\": \"acme.com\",\n    \"name\": \"Acme\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "a1b2c3d4-0002-4000-8000-000000000012",
+          "name": "Retrieve a domain",
+          "request": {
+            "name": "Retrieve a domain",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "GET"
+          }
+        },
+        {
+          "id": "a1b2c3d4-0002-4000-8000-000000000013",
+          "name": "Update a domain",
+          "request": {
+            "name": "Update a domain",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": {\n    \"name\": \"Acme Mail\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "a1b2c3d4-0002-4000-8000-000000000014",
+          "name": "Verify a domain",
+          "request": {
+            "name": "Verify a domain",
+            "description": {
+              "content": "Triggers verification of the domain's DKIM and advanced DNS records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":id",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "POST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-0003-4000-8000-000000000001",
+      "name": "API Tokens",
+      "description": {
+        "content": "Manage per-domain API tokens.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1b2c3d4-0003-4000-8000-000000000010",
+          "name": "List API tokens",
+          "request": {
+            "name": "List API tokens",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":domain_id",
+                "api_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "domain_id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "GET"
+          }
+        },
+        {
+          "id": "a1b2c3d4-0003-4000-8000-000000000011",
+          "name": "Create an API token",
+          "request": {
+            "name": "Create an API token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":domain_id",
+                "api_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "domain_id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_token\": {\n    \"name\": \"production\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "a1b2c3d4-0003-4000-8000-000000000012",
+          "name": "Retrieve an API token",
+          "request": {
+            "name": "Retrieve an API token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":domain_id",
+                "api_tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "domain_id",
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "GET"
+          }
+        },
+        {
+          "id": "a1b2c3d4-0003-4000-8000-000000000013",
+          "name": "Update an API token",
+          "request": {
+            "name": "Update an API token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":domain_id",
+                "api_tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "domain_id",
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_token\": {\n    \"name\": \"production-renamed\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "a1b2c3d4-0003-4000-8000-000000000014",
+          "name": "Revoke an API token",
+          "request": {
+            "name": "Revoke an API token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "domains",
+                ":domain_id",
+                "api_tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "domain_id",
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ],
+            "method": "DELETE"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.mailpace.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a1b2c3d4-0000-4000-8000-000000000000",
+    "name": "MailPace API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The MailPace transactional email API. Send email, manage domains and per-domain API tokens.\n\nContact Support:\n Name: MailPace Support\n Email: support@mailpace.com",
+      "type": "text/plain"
+    }
+  }
+}

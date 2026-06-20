@@ -1,0 +1,93 @@
+aid: mailpace
+url: https://raw.githubusercontent.com/api-evangelist/mailpace/refs/heads/main/apis.yml
+name: MailPace
+kind: company
+description: MailPace is a fast, privacy-focused transactional email API for developers.
+  It delivers application email - password resets, receipts, notifications - over a
+  simple HTTPS REST API and SMTP, with DKIM-verified sending domains, Ed25519-signed
+  webhooks, and EU-based hosting.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Email
+- Transactional Email
+- Messaging
+- SMTP
+- Privacy
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: mailpace:mailpace-send-email-api
+  name: MailPace Send Email API
+  tags:
+  - Email
+  - Send
+  - Transactional Email
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.mailpace.com/reference/send/
+  baseURL: https://app.mailpace.com/api/v1
+  properties:
+  - url: https://docs.mailpace.com/reference/send/
+    type: Documentation
+  - url: https://docs.mailpace.com/reference/overview/
+    type: APIReference
+  - url: openapi/mailpace-openapi.yml
+    type: OpenAPI
+  description: Sends a transactional email via POST /send using the MailPace-Server-Token
+    header. Supports HTML and text bodies, cc/bcc, reply-to, attachments, tags, and
+    up to 50 recipients per request.
+- aid: mailpace:mailpace-domains-api
+  name: MailPace Domains API
+  tags:
+  - Domains
+  - DKIM
+  - Verification
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.mailpace.com/reference/domains/
+  baseURL: https://app.mailpace.com/api/v1
+  properties:
+  - url: https://docs.mailpace.com/reference/domains/
+    type: Documentation
+  - url: https://docs.mailpace.com/reference/overview/
+    type: APIReference
+  - url: openapi/mailpace-openapi.yml
+    type: OpenAPI
+  description: Manages sending domains and their API tokens with the MailPace-Organization-Token
+    header - create, list, update, and DKIM/DNS verify domains, and create or revoke
+    per-domain API tokens.
+- aid: mailpace:mailpace-webhooks-api
+  name: MailPace Webhooks API
+  tags:
+  - Webhooks
+  - Events
+  - Ed25519
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.mailpace.com/guide/webhooks/
+  baseURL: https://app.mailpace.com/api/v1
+  properties:
+  - url: https://docs.mailpace.com/guide/webhooks/
+    type: Documentation
+  - url: review.yml
+    type: Review
+  description: Delivers outbound, Ed25519-signed event callbacks (email.queued, email.delivered,
+    email.deferred, email.bounced, email.spam) to your endpoints. Configured per domain
+    in the MailPace dashboard; the public verification key is exposed on the domain
+    object.
+common:
+- type: GitHubOrganization
+  url: https://github.com/mailpace
+- type: LinkedIn
+  url: https://www.linkedin.com/company/mailpace
+- type: Website
+  url: https://mailpace.com
+- type: Documentation
+  url: https://docs.mailpace.com
+- type: Plans
+  url: plans/mailpace-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/mailpace-rate-limits.yml
+- type: FinOps
+  url: finops/mailpace-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

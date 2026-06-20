@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: MailPace
+providerId: mailpace
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Email
+- Transactional Email
+- Messaging
+- SMTP
+- Privacy
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  MailPace applies sending rate limits to protect deliverability when large
+  volumes of email are sent over short periods. The send endpoint returns
+  HTTP 429 Too Many Requests when limits are exceeded. Per-request structural
+  limits also apply - a maximum of 50 recipients in the To field and a total
+  message size of 50 MB. Specific numeric per-second/per-minute send rates are
+  not published and are not reconciled in this artifact.
+notes: >-
+  Verify any account-specific send-rate ceilings with MailPace support during
+  reconciliation; the documented hard limits are 50 recipients per request and
+  50 MB total message size.
+sources:
+- https://docs.mailpace.com/reference/send/
+- https://docs.mailpace.com/reference/responses/
+responseCodes:
+  throttled: 429
+limits:
+- name: Send Rate
+  scope: account
+  metric: emails
+  limit: see provider documentation
+  notes: Sending too many emails over a short window returns HTTP 429.
+- name: Recipients Per Request
+  scope: request
+  metric: recipients
+  limit: 50
+  notes: Maximum of 50 addresses across the To field per send request.
+- name: Message Size
+  scope: request
+  metric: bytes
+  limit: 52428800
+  notes: Total email size, including attachments, may not exceed 50 MB.
+policies:
+- name: Throttling Response
+  description: Exceeding the send rate returns HTTP 429 Too Many Requests.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and retry queued sends.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

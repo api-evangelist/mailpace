@@ -1,0 +1,89 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: MailPace
+providerId: mailpace
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Email
+- Transactional Email
+- Messaging
+- SMTP
+- Privacy
+- Plans
+description: >-
+  MailPace uses a single usage-based pricing model billed monthly on the
+  number of emails sent and received. A slider-based calculator on the
+  pricing page derives the monthly charge from volume - the first 10,000
+  emails are priced at one rate and additional emails at a lower marginal
+  rate. There are no named Starter / Pro / Enterprise tiers; everyone is on
+  the same metered plan. A hidden free plan (up to 100 emails/month) is
+  available on request. Overage is added automatically to the monthly bill.
+notes: >-
+  Exact per-email rates are derived from the interactive calculator at
+  mailpace.com/pricing and are not reconciled here. A widely cited entry
+  point is roughly $40/year for ~1,000 emails/month. Verify current rates on
+  the pricing page during reconciliation.
+sources:
+- https://mailpace.com/pricing
+- https://docs.mailpace.com/reference/overview/
+plans:
+- id: mailpace-free
+  name: Free (on request)
+  type: free
+  description: >-
+    A non-advertised free plan offering up to 100 emails per month,
+    available by request.
+  entries:
+  - label: Emails
+    name: free_emails
+    type: included
+    metric: emails
+    limit: 100
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  elements:
+  - name: Send
+  - name: Domains
+  - name: Webhooks
+- id: mailpace-usage
+  name: Pay-as-you-go
+  type: usage
+  description: >-
+    Metered plan billed monthly on emails sent and received, with tiered
+    per-email pricing applied across volume.
+  entries:
+  - label: First 10,000 emails
+    name: emails_first_tier
+    type: usage
+    metric: emails
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-email rate per pricing calculator
+    userMultiplied: false
+  - label: Additional emails
+    name: emails_additional_tier
+    type: usage
+    metric: emails
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: lower marginal per-email rate per pricing calculator
+    userMultiplied: false
+  elements:
+  - name: Send
+  - name: Inbound Email
+  - name: Domains
+  - name: Webhooks
+  - name: SMTP
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

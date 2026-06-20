@@ -1,0 +1,264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MailPace API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Send",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/send",
+            "headers": [
+              {
+                "name": "MailPace-Server-Token",
+                "value": "{{serverToken}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"subject\": \"Welcome to Acme\",\n  \"textbody\": \"Thanks for signing up.\"\n}"
+            }
+          },
+          "docs": "Sends a single transactional email. One of htmlbody or textbody is required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Returns an array of domains for the authenticated organization."
+        },
+        {
+          "info": {
+            "name": "Create a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"domain\": {\n    \"url\": \"acme.com\",\n    \"name\": \"Acme\"\n  }\n}"
+            }
+          },
+          "docs": "Creates a new sending domain."
+        },
+        {
+          "info": {
+            "name": "Retrieve a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:id",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Returns a single domain by ID."
+        },
+        {
+          "info": {
+            "name": "Update a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.mailpace.com/api/v1/domains/:id",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"domain\": {\n    \"name\": \"Acme Mail\"\n  }\n}"
+            }
+          },
+          "docs": "Updates the name or url of an existing domain."
+        },
+        {
+          "info": {
+            "name": "Verify a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains/:id/verify",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Triggers verification of the domain's DKIM and advanced DNS records."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List API tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Lists all API tokens for a domain."
+        },
+        {
+          "info": {
+            "name": "Create an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"api_token\": {\n    \"name\": \"production\"\n  }\n}"
+            }
+          },
+          "docs": "Creates a new API token for a domain."
+        },
+        {
+          "info": {
+            "name": "Retrieve an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Returns a single API token by ID."
+        },
+        {
+          "info": {
+            "name": "Update an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"api_token\": {\n    \"name\": \"production-renamed\"\n  }\n}"
+            }
+          },
+          "docs": "Updates attributes of an API token."
+        },
+        {
+          "info": {
+            "name": "Revoke an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "headers": [
+              {
+                "name": "MailPace-Organization-Token",
+                "value": "{{organizationToken}}"
+              }
+            ]
+          },
+          "docs": "Revokes (deletes) an API token."
+        }
+      ]
+    }
+  ]
+}

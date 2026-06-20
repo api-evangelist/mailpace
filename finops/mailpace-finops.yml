@@ -1,0 +1,81 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: MailPace
+providerId: mailpace
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Email
+- Transactional Email
+- Messaging
+- SMTP
+- Privacy
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of MailPace spend. MailPace bills a single usage-based charge
+  computed monthly on the number of emails sent and received, with tiered
+  per-email rates (a first-10,000 tier and a lower marginal tier above it).
+  There are no per-feature charges - domains, webhooks, and SMTP are included.
+  A small free allowance (up to 100 emails/month) exists on request.
+notes: >-
+  Exact per-email rates come from the interactive pricing calculator and are
+  not reconciled here; verify against the pricing page during reconciliation.
+sources:
+- https://mailpace.com/pricing
+- https://docs.mailpace.com/reference/overview/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: MailPace
+serviceCategory: Email and Messaging
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: MailPace
+  ServiceCategory: Email and Messaging
+  ProviderName: MailPace
+  PublisherName: MailPace
+  InvoiceIssuerName: MailPace
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: emails_sent
+  description: Outbound transactional emails sent through the send endpoint or SMTP, billed per email.
+  unit: emails
+  aggregation: sum
+  dimensions:
+  - organization
+  - domain
+- name: emails_received
+  description: Inbound emails received and processed, billed per email.
+  unit: emails
+  aggregation: sum
+  dimensions:
+  - organization
+  - domain
+principles:
+- name: Visibility
+  description: Track monthly send/receive volume per domain against the pricing tiers.
+- name: Allocation
+  description: Use per-domain API tokens to attribute email volume to workloads or teams.
+- name: Optimization
+  description: Consolidate low-volume sends and suppress bounced/spam recipients to avoid wasted sends; stay under tier thresholds where practical.
+- name: Accountability
+  description: Assign owners per domain/token and review monthly email spend against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

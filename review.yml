@@ -1,0 +1,82 @@
+aid: mailpace
+name: MailPace
+review:
+  question: Does MailPace expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. MailPace's only event-driven surface is
+    outbound HTTP webhooks (server-to-server POST callbacks). It does not
+    expose a WebSocket, Server-Sent Events, or other client-consumable
+    streaming transport, so there is no in-scope streaming surface to model.
+findings:
+  summary: |
+    MailPace does not publish a documented public WebSocket or streaming API.
+    The platform is a REST (HTTPS) transactional email API under
+    https://app.mailpace.com/api/v1, with a parallel SMTP sending option.
+    Asynchronous delivery state is communicated via outbound webhooks -
+    Ed25519-signed HTTP POST callbacks delivered to customer-configured
+    endpoints - not via a streaming connection the client opens. Webhooks are
+    configured per domain in the MailPace dashboard; there is no documented
+    webhook-management REST endpoint.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://app.mailpace.com/api/v1
+      documented: true
+    - protocol: SMTP
+      scheme: smtp
+      note: MailPace also accepts mail via authenticated SMTP as an alternative to the REST send endpoint.
+      documented: true
+    - protocol: Webhooks
+      scheme: https
+      note: Outbound, Ed25519-signed HTTP POST callbacks for email lifecycle events. Server-to-server, not a client-opened stream.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the MailPace API reference or guides as of the review date.
+  endpointsConfirmedRest:
+    - POST https://app.mailpace.com/api/v1/send
+    - GET  https://app.mailpace.com/api/v1/domains
+    - POST https://app.mailpace.com/api/v1/domains
+    - GET  https://app.mailpace.com/api/v1/domains/{id}
+    - PATCH https://app.mailpace.com/api/v1/domains/{id}
+    - POST https://app.mailpace.com/api/v1/domains/{id}/verify
+    - GET  https://app.mailpace.com/api/v1/domains/{domain_id}/api_tokens
+    - POST https://app.mailpace.com/api/v1/domains/{domain_id}/api_tokens
+    - GET  https://app.mailpace.com/api/v1/domains/{domain_id}/api_tokens/{id}
+    - PATCH https://app.mailpace.com/api/v1/domains/{domain_id}/api_tokens/{id}
+    - DELETE https://app.mailpace.com/api/v1/domains/{domain_id}/api_tokens/{id}
+  webhookEvents:
+    - email.queued
+    - email.delivered
+    - email.deferred
+    - email.bounced
+    - email.spam
+  webhookSigning:
+    algorithm: Ed25519
+    header: X-MailPace-Signature
+    note: Signature and the domain's webhook_public_key are Base64-encoded and must be decoded before verification.
+sources:
+  - url: https://docs.mailpace.com/reference/overview/
+    type: APIReference
+    note: Lists REST base URL https://app.mailpace.com/api/v1; no WebSocket mentioned.
+  - url: https://docs.mailpace.com/reference/send/
+    type: Documentation
+    note: POST /send authenticated with MailPace-Server-Token; returns id and status.
+  - url: https://docs.mailpace.com/reference/domains/
+    type: Documentation
+    note: Domain and per-domain API token management under MailPace-Organization-Token.
+  - url: https://docs.mailpace.com/guide/webhooks/
+    type: Documentation
+    note: Outbound Ed25519-signed webhooks; configured in the dashboard, no management API.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or client-streaming protocol surface exists. The only
+    event-driven mechanism is outbound HTTP webhooks, which are modeled in the
+    Webhooks sub-API and described here rather than in an AsyncAPI document.
