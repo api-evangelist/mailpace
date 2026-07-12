@@ -74,6 +74,10 @@ apis:
     in the MailPace dashboard; the public verification key is exposed on the domain
     object.
 common:
+- type: DomainSecurity
+  url: security/mailpace-domain-security.yml
+- type: Authentication
+  url: authentication/mailpace-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/mailpace
 - type: LinkedIn

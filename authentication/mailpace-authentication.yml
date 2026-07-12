@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/mailpace-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ServerToken
+  type: apiKey
+  in: header
+  parameter: MailPace-Server-Token
+  description: Per-domain server token used to authenticate send requests.
+  sources:
+  - openapi/mailpace-openapi.yml
+- name: OrganizationToken
+  type: apiKey
+  in: header
+  parameter: MailPace-Organization-Token
+  description: Organization token used to authenticate domain and token management.
+  sources:
+  - openapi/mailpace-openapi.yml
