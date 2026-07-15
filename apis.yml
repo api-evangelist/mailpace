@@ -74,6 +74,8 @@ apis:
     in the MailPace dashboard; the public verification key is exposed on the domain
     object.
 common:
+- type: AgenticAccess
+  url: agentic-access/mailpace-agentic-access.yml
 - type: DomainSecurity
   url: security/mailpace-domain-security.yml
 - type: Authentication
