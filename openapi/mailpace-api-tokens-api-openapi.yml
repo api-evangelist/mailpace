@@ -1,0 +1,160 @@
+openapi: 3.0.1
+info:
+  title: MailPace API Tokens API
+  description: The MailPace transactional email API. Send application email over HTTPS, manage DKIM-verified sending domains and their API tokens, and receive Ed25519-signed delivery event webhooks. Only HTTPS is supported.
+  termsOfService: https://mailpace.com/terms
+  contact:
+    name: MailPace Support
+    email: support@mailpace.com
+    url: https://docs.mailpace.com
+  version: '1.0'
+servers:
+- url: https://app.mailpace.com/api/v1
+  description: MailPace production API
+tags:
+- name: API Tokens
+  description: Manage per-domain API tokens.
+paths:
+  /domains/{domain_id}/api_tokens:
+    parameters:
+    - $ref: '#/components/parameters/DomainIdPath'
+    get:
+      operationId: listApiTokens
+      tags:
+      - API Tokens
+      summary: List API tokens
+      description: Lists all API tokens for a domain.
+      security:
+      - OrganizationToken: []
+      responses:
+        '200':
+          description: An array of API tokens.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiToken'
+    post:
+      operationId: createApiToken
+      tags:
+      - API Tokens
+      summary: Create an API token
+      description: Creates a new API token for a domain.
+      security:
+      - OrganizationToken: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiTokenCreateRequest'
+      responses:
+        '200':
+          description: The created API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+  /domains/{domain_id}/api_tokens/{id}:
+    parameters:
+    - $ref: '#/components/parameters/DomainIdPath'
+    - $ref: '#/components/parameters/TokenId'
+    get:
+      operationId: getApiToken
+      tags:
+      - API Tokens
+      summary: Retrieve an API token
+      description: Returns a single API token by ID.
+      security:
+      - OrganizationToken: []
+      responses:
+        '200':
+          description: The requested API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+    patch:
+      operationId: updateApiToken
+      tags:
+      - API Tokens
+      summary: Update an API token
+      description: Updates attributes of an API token.
+      security:
+      - OrganizationToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiTokenCreateRequest'
+      responses:
+        '200':
+          description: The updated API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+    delete:
+      operationId: deleteApiToken
+      tags:
+      - API Tokens
+      summary: Revoke an API token
+      description: Revokes (deletes) an API token.
+      security:
+      - OrganizationToken: []
+      responses:
+        '204':
+          description: Token revoked.
+components:
+  schemas:
+    ApiTokenCreateRequest:
+      type: object
+      properties:
+        api_token:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Optional display name for the token.
+    ApiToken:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          nullable: true
+        token:
+          type: string
+          description: The server token value used in the MailPace-Server-Token header.
+        created_at:
+          type: string
+          format: date-time
+  parameters:
+    TokenId:
+      name: id
+      in: path
+      required: true
+      description: The numeric ID of the API token.
+      schema:
+        type: integer
+    DomainIdPath:
+      name: domain_id
+      in: path
+      required: true
+      description: The numeric ID of the domain.
+      schema:
+        type: integer
+  securitySchemes:
+    ServerToken:
+      type: apiKey
+      in: header
+      name: MailPace-Server-Token
+      description: Per-domain server token used to authenticate send requests.
+    OrganizationToken:
+      type: apiKey
+      in: header
+      name: MailPace-Organization-Token
+      description: Organization token used to authenticate domain and token management.

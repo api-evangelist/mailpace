@@ -1,0 +1,175 @@
+openapi: 3.0.1
+info:
+  title: MailPace API Tokens Send API
+  description: The MailPace transactional email API. Send application email over HTTPS, manage DKIM-verified sending domains and their API tokens, and receive Ed25519-signed delivery event webhooks. Only HTTPS is supported.
+  termsOfService: https://mailpace.com/terms
+  contact:
+    name: MailPace Support
+    email: support@mailpace.com
+    url: https://docs.mailpace.com
+  version: '1.0'
+servers:
+- url: https://app.mailpace.com/api/v1
+  description: MailPace production API
+tags:
+- name: Send
+  description: Send transactional email.
+paths:
+  /send:
+    post:
+      operationId: sendEmail
+      tags:
+      - Send
+      summary: Send a transactional email
+      description: Sends a single transactional email. Authenticated with the MailPace-Server-Token header. One of htmlbody or textbody is required. Up to 50 recipients are allowed across the to field, and the total message size may not exceed 50 MB.
+      security:
+      - ServerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendRequest'
+      responses:
+        '200':
+          description: Email accepted and queued for sending.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+        '400':
+          description: Bad request - invalid token/domain mismatch, unparseable sender, missing or invalid To field, blocked recipient, more than 50 recipients, or disallowed attachment type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - domain not DKIM verified, no active subscription, or account disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - sending rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    SendRequest:
+      type: object
+      required:
+      - from
+      - to
+      description: A transactional email. One of htmlbody or textbody must be supplied.
+      properties:
+        from:
+          type: string
+          description: Sender, as an email or "Name <email@domain.com>".
+          example: Acme <noreply@acme.com>
+        to:
+          type: string
+          description: Recipient(s), single or comma-separated, up to 50 addresses.
+          example: user@example.com
+        cc:
+          type: string
+          description: Comma-separated CC addresses.
+        bcc:
+          type: string
+          description: Comma-separated BCC addresses.
+        subject:
+          type: string
+          description: Email subject line.
+          example: Welcome to Acme
+        htmlbody:
+          type: string
+          description: HTML body. Required if textbody is absent.
+        textbody:
+          type: string
+          description: Plain-text body. Required if htmlbody is absent.
+        replyto:
+          type: string
+          description: Reply-To address.
+        inreplyto:
+          type: string
+          description: Message-ID this email replies to.
+        references:
+          type: string
+          description: Space-separated list of referenced Message-IDs.
+        list_unsubscribe:
+          type: string
+          description: List-Unsubscribe header value.
+        tags:
+          description: A single tag or an array of tags.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        attachments:
+          type: array
+          description: Base64-encoded attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    SendResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Internal email identifier.
+          example: 12345
+        status:
+          type: string
+          description: Queue status of the email.
+          example: pending
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: object
+          description: Field-level validation errors, when applicable.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    Attachment:
+      type: object
+      required:
+      - name
+      - content
+      properties:
+        name:
+          type: string
+          description: File name.
+          example: invoice.pdf
+        content:
+          type: string
+          description: Base64-encoded file content.
+        content_type:
+          type: string
+          description: MIME type of the attachment.
+          example: application/pdf
+        cid:
+          type: string
+          description: Content-ID for inline embedding.
+  securitySchemes:
+    ServerToken:
+      type: apiKey
+      in: header
+      name: MailPace-Server-Token
+      description: Per-domain server token used to authenticate send requests.
+    OrganizationToken:
+      type: apiKey
+      in: header
+      name: MailPace-Organization-Token
+      description: Organization token used to authenticate domain and token management.
