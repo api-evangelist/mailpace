@@ -6,7 +6,20 @@ description: MailPace is a fast, privacy-focused transactional email API for dev
   It delivers application email - password resets, receipts, notifications - over a
   simple HTTPS REST API and SMTP, with DKIM-verified sending domains, Ed25519-signed
   webhooks, and EU-based hosting.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mailpace.png
 tags:
 - Email
 - Transactional Email
@@ -17,44 +30,6 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: mailpace:mailpace-send-email-api
-  name: MailPace Send Email API
-  tags:
-  - Email
-  - Send
-  - Transactional Email
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.mailpace.com/reference/send/
-  baseURL: https://app.mailpace.com/api/v1
-  properties:
-  - url: https://docs.mailpace.com/reference/send/
-    type: Documentation
-  - url: https://docs.mailpace.com/reference/overview/
-    type: APIReference
-  - url: openapi/mailpace-openapi.yml
-    type: OpenAPI
-  description: Sends a transactional email via POST /send using the MailPace-Server-Token
-    header. Supports HTML and text bodies, cc/bcc, reply-to, attachments, tags, and
-    up to 50 recipients per request.
-- aid: mailpace:mailpace-domains-api
-  name: MailPace Domains API
-  tags:
-  - Domains
-  - DKIM
-  - Verification
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.mailpace.com/reference/domains/
-  baseURL: https://app.mailpace.com/api/v1
-  properties:
-  - url: https://docs.mailpace.com/reference/domains/
-    type: Documentation
-  - url: https://docs.mailpace.com/reference/overview/
-    type: APIReference
-  - url: openapi/mailpace-openapi.yml
-    type: OpenAPI
-  description: Manages sending domains and their API tokens with the MailPace-Organization-Token
-    header - create, list, update, and DKIM/DNS verify domains, and create or revoke
-    per-domain API tokens.
 - aid: mailpace:mailpace-webhooks-api
   name: MailPace Webhooks API
   tags:
@@ -69,10 +44,58 @@ apis:
     type: Documentation
   - url: review.yml
     type: Review
-  description: Delivers outbound, Ed25519-signed event callbacks (email.queued, email.delivered,
-    email.deferred, email.bounced, email.spam) to your endpoints. Configured per domain
-    in the MailPace dashboard; the public verification key is exposed on the domain
-    object.
+  description: >-
+    Delivers outbound, Ed25519-signed event callbacks (email.queued, email.delivered, email.deferred,
+    email.bounced, email.spam) to your endpoints. Configured per domain in the MailPace dashboard; the
+    public verification key is exposed on the domain object.
+- aid: mailpace:mailpace-api-tokens-api
+  name: MailPace API Tokens API
+  description: Manage per-domain API tokens.
+  humanURL: https://docs.mailpace.com/reference/send/
+  baseURL: https://app.mailpace.com/api/v1
+  tags:
+  - API Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/mailpace-api-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/send/
+  - type: APIReference
+    url: https://docs.mailpace.com/reference/overview/
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/domains/
+- aid: mailpace:mailpace-domains-api
+  name: MailPace Domains API
+  description: Manage sending domains and DKIM verification.
+  humanURL: https://docs.mailpace.com/reference/send/
+  baseURL: https://app.mailpace.com/api/v1
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/mailpace-domains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/send/
+  - type: APIReference
+    url: https://docs.mailpace.com/reference/overview/
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/domains/
+- aid: mailpace:mailpace-send-api
+  name: MailPace Send API
+  description: Send transactional email.
+  humanURL: https://docs.mailpace.com/reference/send/
+  baseURL: https://app.mailpace.com/api/v1
+  tags:
+  - Send
+  properties:
+  - type: OpenAPI
+    url: openapi/mailpace-send-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/send/
+  - type: APIReference
+    url: https://docs.mailpace.com/reference/overview/
+  - type: Documentation
+    url: https://docs.mailpace.com/reference/domains/
 common:
 - type: AgenticAccess
   url: agentic-access/mailpace-agentic-access.yml
