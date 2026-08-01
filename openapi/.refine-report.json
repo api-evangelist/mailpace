@@ -1,0 +1,18 @@
+{
+  "provider": "mailpace",
+  "sources": [
+    "mailpace-api-tokens-api-openapi.yml",
+    "mailpace-domains-api-openapi.yml",
+    "mailpace-send-api-openapi.yml"
+  ],
+  "outputs": [
+    "mailpace-api-tokens-api-openapi.yml",
+    "mailpace-domains-api-openapi.yml",
+    "mailpace-send-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

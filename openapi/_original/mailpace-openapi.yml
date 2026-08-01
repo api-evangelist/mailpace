@@ -1,0 +1,500 @@
+openapi: 3.0.1
+info:
+  title: MailPace API
+  description: >-
+    The MailPace transactional email API. Send application email over HTTPS,
+    manage DKIM-verified sending domains and their API tokens, and receive
+    Ed25519-signed delivery event webhooks. Only HTTPS is supported.
+  termsOfService: https://mailpace.com/terms
+  contact:
+    name: MailPace Support
+    email: support@mailpace.com
+    url: https://docs.mailpace.com
+  version: '1.0'
+servers:
+  - url: https://app.mailpace.com/api/v1
+    description: MailPace production API
+tags:
+  - name: Send
+    description: Send transactional email.
+  - name: Domains
+    description: Manage sending domains and DKIM verification.
+  - name: API Tokens
+    description: Manage per-domain API tokens.
+paths:
+  /send:
+    post:
+      operationId: sendEmail
+      tags:
+        - Send
+      summary: Send a transactional email
+      description: >-
+        Sends a single transactional email. Authenticated with the
+        MailPace-Server-Token header. One of htmlbody or textbody is required.
+        Up to 50 recipients are allowed across the to field, and the total
+        message size may not exceed 50 MB.
+      security:
+        - ServerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendRequest'
+      responses:
+        '200':
+          description: Email accepted and queued for sending.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+        '400':
+          description: >-
+            Bad request - invalid token/domain mismatch, unparseable sender,
+            missing or invalid To field, blocked recipient, more than 50
+            recipients, or disallowed attachment type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Forbidden - domain not DKIM verified, no active subscription, or
+            account disabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - sending rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /domains:
+    get:
+      operationId: listDomains
+      tags:
+        - Domains
+      summary: List domains
+      description: Returns an array of domains for the authenticated organization.
+      security:
+        - OrganizationToken: []
+      responses:
+        '200':
+          description: An array of domains.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+        '401':
+          description: Missing or invalid organization token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: createDomain
+      tags:
+        - Domains
+      summary: Create a domain
+      description: Creates a new sending domain for the authenticated organization.
+      security:
+        - OrganizationToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainCreateRequest'
+      responses:
+        '200':
+          description: The created domain.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '422':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /domains/{id}:
+    parameters:
+      - $ref: '#/components/parameters/DomainId'
+    get:
+      operationId: getDomain
+      tags:
+        - Domains
+      summary: Retrieve a domain
+      description: Returns a single domain by ID.
+      security:
+        - OrganizationToken: []
+      responses:
+        '200':
+          description: The requested domain.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '404':
+          description: Domain not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: updateDomain
+      tags:
+        - Domains
+      summary: Update a domain
+      description: Updates the name or url of an existing domain.
+      security:
+        - OrganizationToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainUpdateRequest'
+      responses:
+        '200':
+          description: The updated domain.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+  /domains/{id}/verify:
+    parameters:
+      - $ref: '#/components/parameters/DomainId'
+    post:
+      operationId: verifyDomain
+      tags:
+        - Domains
+      summary: Verify a domain
+      description: >-
+        Triggers verification of the domain's DKIM and advanced DNS records.
+      security:
+        - OrganizationToken: []
+      responses:
+        '200':
+          description: The domain with updated verification status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+  /domains/{domain_id}/api_tokens:
+    parameters:
+      - $ref: '#/components/parameters/DomainIdPath'
+    get:
+      operationId: listApiTokens
+      tags:
+        - API Tokens
+      summary: List API tokens
+      description: Lists all API tokens for a domain.
+      security:
+        - OrganizationToken: []
+      responses:
+        '200':
+          description: An array of API tokens.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiToken'
+    post:
+      operationId: createApiToken
+      tags:
+        - API Tokens
+      summary: Create an API token
+      description: Creates a new API token for a domain.
+      security:
+        - OrganizationToken: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiTokenCreateRequest'
+      responses:
+        '200':
+          description: The created API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+  /domains/{domain_id}/api_tokens/{id}:
+    parameters:
+      - $ref: '#/components/parameters/DomainIdPath'
+      - $ref: '#/components/parameters/TokenId'
+    get:
+      operationId: getApiToken
+      tags:
+        - API Tokens
+      summary: Retrieve an API token
+      description: Returns a single API token by ID.
+      security:
+        - OrganizationToken: []
+      responses:
+        '200':
+          description: The requested API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+    patch:
+      operationId: updateApiToken
+      tags:
+        - API Tokens
+      summary: Update an API token
+      description: Updates attributes of an API token.
+      security:
+        - OrganizationToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiTokenCreateRequest'
+      responses:
+        '200':
+          description: The updated API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+    delete:
+      operationId: deleteApiToken
+      tags:
+        - API Tokens
+      summary: Revoke an API token
+      description: Revokes (deletes) an API token.
+      security:
+        - OrganizationToken: []
+      responses:
+        '204':
+          description: Token revoked.
+components:
+  securitySchemes:
+    ServerToken:
+      type: apiKey
+      in: header
+      name: MailPace-Server-Token
+      description: Per-domain server token used to authenticate send requests.
+    OrganizationToken:
+      type: apiKey
+      in: header
+      name: MailPace-Organization-Token
+      description: Organization token used to authenticate domain and token management.
+  parameters:
+    DomainId:
+      name: id
+      in: path
+      required: true
+      description: The numeric ID of the domain.
+      schema:
+        type: integer
+    DomainIdPath:
+      name: domain_id
+      in: path
+      required: true
+      description: The numeric ID of the domain.
+      schema:
+        type: integer
+    TokenId:
+      name: id
+      in: path
+      required: true
+      description: The numeric ID of the API token.
+      schema:
+        type: integer
+  schemas:
+    SendRequest:
+      type: object
+      required:
+        - from
+        - to
+      description: >-
+        A transactional email. One of htmlbody or textbody must be supplied.
+      properties:
+        from:
+          type: string
+          description: Sender, as an email or "Name <email@domain.com>".
+          example: Acme <noreply@acme.com>
+        to:
+          type: string
+          description: Recipient(s), single or comma-separated, up to 50 addresses.
+          example: user@example.com
+        cc:
+          type: string
+          description: Comma-separated CC addresses.
+        bcc:
+          type: string
+          description: Comma-separated BCC addresses.
+        subject:
+          type: string
+          description: Email subject line.
+          example: Welcome to Acme
+        htmlbody:
+          type: string
+          description: HTML body. Required if textbody is absent.
+        textbody:
+          type: string
+          description: Plain-text body. Required if htmlbody is absent.
+        replyto:
+          type: string
+          description: Reply-To address.
+        inreplyto:
+          type: string
+          description: Message-ID this email replies to.
+        references:
+          type: string
+          description: Space-separated list of referenced Message-IDs.
+        list_unsubscribe:
+          type: string
+          description: List-Unsubscribe header value.
+        tags:
+          description: A single tag or an array of tags.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        attachments:
+          type: array
+          description: Base64-encoded attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    Attachment:
+      type: object
+      required:
+        - name
+        - content
+      properties:
+        name:
+          type: string
+          description: File name.
+          example: invoice.pdf
+        content:
+          type: string
+          description: Base64-encoded file content.
+        content_type:
+          type: string
+          description: MIME type of the attachment.
+          example: application/pdf
+        cid:
+          type: string
+          description: Content-ID for inline embedding.
+    SendResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Internal email identifier.
+          example: 12345
+        status:
+          type: string
+          description: Queue status of the email.
+          example: pending
+    Domain:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          nullable: true
+        url:
+          type: string
+        dkim_selector:
+          type: string
+        dkim_string:
+          type: string
+        dkim_verified:
+          type: boolean
+        advanced_verified:
+          type: boolean
+        webhook_public_key:
+          type: string
+          description: Base64-encoded Ed25519 public key used to verify webhook signatures.
+        created_at:
+          type: string
+          format: date-time
+        modified_at:
+          type: string
+          format: date-time
+    DomainCreateRequest:
+      type: object
+      required:
+        - domain
+      properties:
+        domain:
+          type: object
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              description: The domain to send from.
+              example: acme.com
+            name:
+              type: string
+              description: Optional display name.
+    DomainUpdateRequest:
+      type: object
+      required:
+        - domain
+      properties:
+        domain:
+          type: object
+          properties:
+            url:
+              type: string
+            name:
+              type: string
+    ApiToken:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          nullable: true
+        token:
+          type: string
+          description: The server token value used in the MailPace-Server-Token header.
+        created_at:
+          type: string
+          format: date-time
+    ApiTokenCreateRequest:
+      type: object
+      properties:
+        api_token:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Optional display name for the token.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: object
+          description: Field-level validation errors, when applicable.
+          additionalProperties:
+            type: array
+            items:
+              type: string
