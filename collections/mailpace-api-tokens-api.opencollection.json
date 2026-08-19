@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MailPace API Tokens API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List API tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists all API tokens for a domain."
+        },
+        {
+          "info": {
+            "name": "Create an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new API token for a domain."
+        },
+        {
+          "info": {
+            "name": "Retrieve an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the API token."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single API token by ID."
+        },
+        {
+          "info": {
+            "name": "Update an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the API token."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates attributes of an API token."
+        },
+        {
+          "info": {
+            "name": "Revoke an API token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.mailpace.com/api/v1/domains/:domain_id/api_tokens/:id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the API token."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revokes (deletes) an API token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

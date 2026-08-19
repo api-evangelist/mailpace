@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MailPace API Tokens Send API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Send",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Server-Token",
+              "value": "{{MailPace-Server-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Sends a single transactional email. Authenticated with the MailPace-Server-Token header. One of htmlbody or textbody is required. Up to 50 recipients are allowed across the to field, and the total message size may not exceed 50 MB."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

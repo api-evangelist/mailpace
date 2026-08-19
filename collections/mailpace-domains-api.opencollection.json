@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MailPace API Tokens Domains API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains",
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns an array of domains for the authenticated organization."
+        },
+        {
+          "info": {
+            "name": "Create a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new sending domain for the authenticated organization."
+        },
+        {
+          "info": {
+            "name": "Retrieve a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.mailpace.com/api/v1/domains/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single domain by ID."
+        },
+        {
+          "info": {
+            "name": "Update a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://app.mailpace.com/api/v1/domains/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the name or url of an existing domain."
+        },
+        {
+          "info": {
+            "name": "Verify a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.mailpace.com/api/v1/domains/:id/verify",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The numeric ID of the domain."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "MailPace-Organization-Token",
+              "value": "{{MailPace-Organization-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Triggers verification of the domain's DKIM and advanced DNS records."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

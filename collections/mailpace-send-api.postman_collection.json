@@ -1,0 +1,351 @@
+{
+  "item": [
+    {
+      "id": "f8b8696c-ce64-40f3-addc-1100d36623a6",
+      "name": "Send",
+      "description": {
+        "content": "Send transactional email.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b20aacc-4b5f-4bc0-b116-49962762ad5c",
+          "name": "Send a transactional email",
+          "request": {
+            "name": "Send a transactional email",
+            "description": {
+              "content": "Sends a single transactional email. Authenticated with the MailPace-Server-Token header. One of htmlbody or textbody is required. Up to 50 recipients are allowed across the to field, and the total message size may not exceed 50 MB.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "MailPace-Server-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": \"<string>\",\n  \"to\": \"<string>\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\",\n      \"content_type\": \"<string>\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"content\": \"<string>\",\n      \"content_type\": \"<string>\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "404f4e8a-00a5-4ee5-8a4d-67562c7cb470",
+              "name": "Email accepted and queued for sending.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "MailPace-Server-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"Welcome to Acme\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12345,\n  \"status\": \"pending\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "704ddc3d-4b45-4d8f-83a5-42b8566adad1",
+              "name": "Bad request - invalid token/domain mismatch, unparseable sender, missing or invalid To field, blocked recipient, more than 50 recipients, or disallowed attachment type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "MailPace-Server-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"Welcome to Acme\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4af193dd-ee28-4f61-9be1-534e4c8e4cac",
+              "name": "Missing API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "MailPace-Server-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"Welcome to Acme\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "571f1910-7bfd-428e-9610-762ca083dede",
+              "name": "Forbidden - domain not DKIM verified, no active subscription, or account disabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "MailPace-Server-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"Welcome to Acme\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d519d1c2-0c98-438e-8d23-5b9fd44b091e",
+              "name": "Too many requests - sending rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "MailPace-Server-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"Acme <noreply@acme.com>\",\n  \"to\": \"user@example.com\",\n  \"cc\": \"<string>\",\n  \"bcc\": \"<string>\",\n  \"subject\": \"Welcome to Acme\",\n  \"htmlbody\": \"<string>\",\n  \"textbody\": \"<string>\",\n  \"replyto\": \"<string>\",\n  \"inreplyto\": \"<string>\",\n  \"references\": \"<string>\",\n  \"list_unsubscribe\": \"<string>\",\n  \"tags\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    },\n    {\n      \"name\": \"invoice.pdf\",\n      \"content\": \"<string>\",\n      \"content_type\": \"application/pdf\",\n      \"cid\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.mailpace.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f7d94742-140e-4b87-9b15-bcb5bdcfa781",
+    "name": "MailPace API Tokens Send API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The MailPace transactional email API. Send application email over HTTPS, manage DKIM-verified sending domains and their API tokens, and receive Ed25519-signed delivery event webhooks. Only HTTPS is supported.\n\nContact Support:\n Name: MailPace Support\n Email: support@mailpace.com",
+      "type": "text/plain"
+    }
+  }
+}
