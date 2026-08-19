@@ -28,7 +28,7 @@ tags:
 - Privacy
 created: '2026-06-20'
 modified: '2026-06-20'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: mailpace:mailpace-webhooks-api
   name: MailPace Webhooks API
