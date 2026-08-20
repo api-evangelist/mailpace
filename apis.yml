@@ -33,6 +33,10 @@ apis:
 - aid: mailpace:mailpace-webhooks-api
   name: MailPace Webhooks API
   tags:
+  - Webhook
+  - Event
+  - Ed25519
+  tags_raw:
   - Webhooks
   - Events
   - Ed25519
