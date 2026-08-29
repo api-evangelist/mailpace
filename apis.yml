@@ -6,6 +6,18 @@ description: MailPace is a fast, privacy-focused transactional email API for dev
   It delivers application email - password resets, receipts, notifications - over a
   simple HTTPS REST API and SMTP, with DKIM-verified sending domains, Ed25519-signed
   webhooks, and EU-based hosting.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
