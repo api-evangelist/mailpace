@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: MailPace API Tokens API
   description: The MailPace transactional email API. Send application email over HTTPS, manage DKIM-verified sending domains and their API tokens, and receive Ed25519-signed delivery event webhooks. Only HTTPS is supported.
@@ -109,6 +109,21 @@ paths:
           description: Token revoked.
 components:
   schemas:
+    ApiToken:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type:
+          - string
+          - 'null'
+        token:
+          type: string
+          description: The server token value used in the MailPace-Server-Token header.
+        created_at:
+          type: string
+          format: date-time
     ApiTokenCreateRequest:
       type: object
       properties:
@@ -118,33 +133,19 @@ components:
             name:
               type: string
               description: Optional display name for the token.
-    ApiToken:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-          nullable: true
-        token:
-          type: string
-          description: The server token value used in the MailPace-Server-Token header.
-        created_at:
-          type: string
-          format: date-time
   parameters:
-    TokenId:
-      name: id
-      in: path
-      required: true
-      description: The numeric ID of the API token.
-      schema:
-        type: integer
     DomainIdPath:
       name: domain_id
       in: path
       required: true
       description: The numeric ID of the domain.
+      schema:
+        type: integer
+    TokenId:
+      name: id
+      in: path
+      required: true
+      description: The numeric ID of the API token.
       schema:
         type: integer
   securitySchemes:

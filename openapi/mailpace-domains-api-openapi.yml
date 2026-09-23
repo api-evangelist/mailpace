@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: MailPace API Tokens Domains API
+  title: MailPace Domains API
   description: The MailPace transactional email API. Send application email over HTTPS, manage DKIM-verified sending domains and their API tokens, and receive Ed25519-signed delivery event webhooks. Only HTTPS is supported.
   termsOfService: https://mailpace.com/terms
   contact:
@@ -137,8 +137,9 @@ components:
         id:
           type: integer
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         url:
           type: string
         dkim_selector:
@@ -158,6 +159,18 @@ components:
         modified_at:
           type: string
           format: date-time
+    DomainUpdateRequest:
+      type: object
+      required:
+      - domain
+      properties:
+        domain:
+          type: object
+          properties:
+            url:
+              type: string
+            name:
+              type: string
     Error:
       type: object
       properties:
@@ -170,18 +183,6 @@ components:
           additionalProperties:
             type: array
             items:
-              type: string
-    DomainUpdateRequest:
-      type: object
-      required:
-      - domain
-      properties:
-        domain:
-          type: object
-          properties:
-            url:
-              type: string
-            name:
               type: string
     DomainCreateRequest:
       type: object
