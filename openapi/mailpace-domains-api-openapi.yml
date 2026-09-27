@@ -131,6 +131,23 @@ paths:
                 $ref: '#/components/schemas/Domain'
 components:
   schemas:
+    DomainCreateRequest:
+      type: object
+      required:
+      - domain
+      properties:
+        domain:
+          type: object
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              description: The domain to send from.
+              example: acme.com
+            name:
+              type: string
+              description: Optional display name.
     Domain:
       type: object
       properties:
@@ -159,18 +176,6 @@ components:
         modified_at:
           type: string
           format: date-time
-    DomainUpdateRequest:
-      type: object
-      required:
-      - domain
-      properties:
-        domain:
-          type: object
-          properties:
-            url:
-              type: string
-            name:
-              type: string
     Error:
       type: object
       properties:
@@ -184,23 +189,18 @@ components:
             type: array
             items:
               type: string
-    DomainCreateRequest:
+    DomainUpdateRequest:
       type: object
       required:
       - domain
       properties:
         domain:
           type: object
-          required:
-          - url
           properties:
             url:
               type: string
-              description: The domain to send from.
-              example: acme.com
             name:
               type: string
-              description: Optional display name.
   parameters:
     DomainId:
       name: id
