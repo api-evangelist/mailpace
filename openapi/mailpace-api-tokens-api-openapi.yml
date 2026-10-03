@@ -108,6 +108,21 @@ paths:
         '204':
           description: Token revoked.
 components:
+  parameters:
+    DomainIdPath:
+      name: domain_id
+      in: path
+      required: true
+      description: The numeric ID of the domain.
+      schema:
+        type: integer
+    TokenId:
+      name: id
+      in: path
+      required: true
+      description: The numeric ID of the API token.
+      schema:
+        type: integer
   schemas:
     ApiToken:
       type: object
@@ -133,21 +148,6 @@ components:
             name:
               type: string
               description: Optional display name for the token.
-  parameters:
-    TokenId:
-      name: id
-      in: path
-      required: true
-      description: The numeric ID of the API token.
-      schema:
-        type: integer
-    DomainIdPath:
-      name: domain_id
-      in: path
-      required: true
-      description: The numeric ID of the domain.
-      schema:
-        type: integer
   securitySchemes:
     ServerToken:
       type: apiKey

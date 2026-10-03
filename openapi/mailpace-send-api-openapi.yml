@@ -63,30 +63,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    SendResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Internal email identifier.
-          example: 12345
-        status:
-          type: string
-          description: Queue status of the email.
-          example: pending
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: object
-          description: Field-level validation errors, when applicable.
-          additionalProperties:
-            type: array
-            items:
-              type: string
     Attachment:
       type: object
       required:
@@ -162,6 +138,30 @@ components:
           description: Base64-encoded attachments.
           items:
             $ref: '#/components/schemas/Attachment'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: object
+          description: Field-level validation errors, when applicable.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SendResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Internal email identifier.
+          example: 12345
+        status:
+          type: string
+          description: Queue status of the email.
+          example: pending
   securitySchemes:
     ServerToken:
       type: apiKey
