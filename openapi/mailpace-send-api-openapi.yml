@@ -83,6 +83,17 @@ components:
         cid:
           type: string
           description: Content-ID for inline embedding.
+    SendResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Internal email identifier.
+          example: 12345
+        status:
+          type: string
+          description: Queue status of the email.
+          example: pending
     SendRequest:
       type: object
       required:
@@ -151,17 +162,6 @@ components:
             type: array
             items:
               type: string
-    SendResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Internal email identifier.
-          example: 12345
-        status:
-          type: string
-          description: Queue status of the email.
-          example: pending
   securitySchemes:
     ServerToken:
       type: apiKey
