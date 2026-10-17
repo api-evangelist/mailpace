@@ -83,6 +83,19 @@ components:
         cid:
           type: string
           description: Content-ID for inline embedding.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: object
+          description: Field-level validation errors, when applicable.
+          additionalProperties:
+            type: array
+            items:
+              type: string
     SendResponse:
       type: object
       properties:
@@ -149,19 +162,6 @@ components:
           description: Base64-encoded attachments.
           items:
             $ref: '#/components/schemas/Attachment'
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: object
-          description: Field-level validation errors, when applicable.
-          additionalProperties:
-            type: array
-            items:
-              type: string
   securitySchemes:
     ServerToken:
       type: apiKey
