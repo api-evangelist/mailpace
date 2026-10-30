@@ -1,4 +1,4 @@
-# MailPace (mailpace)
+# MailPace
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,94 +66,120 @@
 
 MailPace is a fast, privacy-focused transactional email API for developers. It delivers application email - password resets, receipts, notifications - over a simple HTTPS REST API and SMTP, with DKIM-verified sending domains, Ed25519-signed webhooks, and EU-based hosting.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/mailpace/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/mailpace/refs/heads/main/apis.yml)
+**Areas:** Email · Transactional Email · Messaging · SMTP · Privacy
 
-## Tags
+## MailPace on APIs.io
 
-- Email
-- Transactional Email
-- Messaging
-- SMTP
-- Privacy
+Everything profiled for MailPace is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/mailpace/](https://apis.io/providers/mailpace/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [MailPace Webhooks API](https://apis.io/apis/mailpace/mailpace-webhooks-api/) — Delivers outbound, Ed25519-signed event callbacks (email.queued, email.delivered, email.deferred, email.bounced, email.spam) to your endpoints. Configured…
+- [MailPace API Tokens API](https://apis.io/apis/mailpace/mailpace-api-tokens-api/) — Manage per-domain API tokens.
+- [MailPace Domains API](https://apis.io/apis/mailpace/mailpace-domains-api/) — Manage sending domains and DKIM verification.
+- [MailPace Send API](https://apis.io/apis/mailpace/mailpace-send-api/) — Send transactional email.
 
-## APIs
+### Published properties
 
-### MailPace Send Email API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Sends a transactional email via POST /send using the MailPace-Server-Token header. Supports HTML and text bodies, cc/bcc, reply-to, attachments, tags, and up to 50 recipients per request.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.mailpace.com/reference/send/](https://docs.mailpace.com/reference/send/)
-- **Base URL:** `https://app.mailpace.com/api/v1`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Mailpace Agentic Access](https://apis.io/agentic-access/mailpace/mailpace-agentic-access/)
 
-- Email
-- Send
-- Transactional Email
+#### Collections (4)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://docs.mailpace.com/reference/send/)
-- [API Reference](https://docs.mailpace.com/reference/overview/)
-- [OpenAPI](openapi/mailpace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/mailpace.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/mailpace.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [MailPace API](https://apis.io/collections/mailpace/open-mailpace/)
+- [MailPace API Tokens API](https://apis.io/collections/mailpace/open-mailpace-api-tokens-api/)
+- [MailPace API Tokens Domains API](https://apis.io/collections/mailpace/open-mailpace-domains-api/)
+- [MailPace API Tokens Send API](https://apis.io/collections/mailpace/open-mailpace-send-api/)
 
-### MailPace Domains API
+#### Security (2)
 
-Manages sending domains and their API tokens with the MailPace-Organization-Token header - create, list, update, and DKIM/DNS verify domains, and create or revoke per-domain API tokens.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.mailpace.com/reference/domains/](https://docs.mailpace.com/reference/domains/)
-- **Base URL:** `https://app.mailpace.com/api/v1`
+- [Mailpace Authentication](https://apis.io/security/mailpace/mailpace-authentication/)
+- [Mailpace Domain Security](https://apis.io/security/mailpace/mailpace-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Domains
-- DKIM
-- Verification
+Published plans, tiers and prices.
 
-#### Properties
+- [Mailpace Plans Pricing](https://apis.io/plans/mailpace/mailpace-plans-pricing/)
 
-- [Documentation](https://docs.mailpace.com/reference/domains/)
-- [API Reference](https://docs.mailpace.com/reference/overview/)
-- [OpenAPI](openapi/mailpace-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/mailpace.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/mailpace.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### MailPace Webhooks API
+Published request limits.
 
-Delivers outbound, Ed25519-signed event callbacks (email.queued, email.delivered, email.deferred, email.bounced, email.spam) to your endpoints. Configured per domain in the MailPace dashboard; the public verification key is exposed on the domain object.
+- [Mailpace Rate Limits](https://apis.io/rate-limits/mailpace/mailpace-rate-limits/)
 
-- **Human URL:** [https://docs.mailpace.com/guide/webhooks/](https://docs.mailpace.com/guide/webhooks/)
-- **Base URL:** `https://app.mailpace.com/api/v1`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Webhooks
-- Events
-- Ed25519
+- [Mailpace Finops](https://apis.io/finops/mailpace/mailpace-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://docs.mailpace.com/guide/webhooks/)
-- [Review](review.yml)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-## Common Properties
-
-- [GitHub Organization](https://github.com/mailpace)
-- [LinkedIn](https://www.linkedin.com/company/mailpace)
 - [Website](https://mailpace.com)
 - [Documentation](https://docs.mailpace.com)
-- [Plans](plans/mailpace-plans-pricing.yml)
-- [Rate Limits](rate-limits/mailpace-rate-limits.yml)
-- [Fin Ops](finops/mailpace-finops.yml)
+- [GitHub](https://github.com/mailpace)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 25.9** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 49.4 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 5.3 |
+
+**Agent readiness 23.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/mailpace/](https://apis.io/providers/mailpace/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MailPace: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/mailpace/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
